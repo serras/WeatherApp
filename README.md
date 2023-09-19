@@ -1,4 +1,4 @@
-# Compose Desktop Weather App
+# Weather App with Arrow + Compose Desktop
 
 > Based on the [How to Build an MVI Clean Code Weather App](https://www.youtube.com/watch?v=eAbKK7JNxCE) tutorial
 > by [Philipp Lackner](https://www.youtube.com/@PhilippLackner). The Weather domain model is heavily based on
