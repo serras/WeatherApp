@@ -12,7 +12,7 @@ The application uses [Open-Meteo](https://open-meteo.com/) to gather forecast da
 tutorial](https://www.youtube.com/watch?v=eAbKK7JNxCE). [GeoIP2](https://www.maxmind.com/en/geoip2-city) is
 used to map IPs to locations, since we don't use location services.
 
-## Compose Desktop
+### Compose Desktop
 
 The application is implemented in [Compose Multiplatform Desktop](https://www.jetbrains.com/lp/compose-multiplatform/)
 instead of Android. The main reason is being able to use experimental Kotlin features, which are only available
@@ -25,10 +25,15 @@ The [original tutorial](https://www.youtube.com/watch?v=eAbKK7JNxCE) uses a clas
 the different states of the application (loading, error, success).
 
 ```kotlin
-data class WeatherState(val isLoading: Boolean, val weatherInfo: WeatherInfo?, val error: String?)
+data class WeatherState(
+    val isLoading: Boolean, 
+    val weatherInfo: WeatherInfo?, 
+    val error: String?
+)
 ```
 
-Our implementation uses [sealed interfaces](https://kotlinlang.org/docs/sealed-classes.html) instead.
+[Our implementation](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/presentation/model/WeatherState.kt)
+uses [sealed interfaces](https://kotlinlang.org/docs/sealed-classes.html) instead.
 Each state gets its own type, making it [impossible to represent invalid states](https://arrow-kt.io/learn/design/domain-modeling/),
 
 ```kotlin
@@ -50,7 +55,7 @@ context(WeatherRepository, LocationTracker)
 class WeatherViewModel { /* implementation */ }
 ```
 
-The actual injection of dependencies is performed manually in the `Main` file,
+The actual injection of dependencies is performed manually in the [entry point](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/Main.kt),
 
 ```kotlin
 suspend fun <A> injectDependencies(
@@ -77,11 +82,21 @@ activity is then closed, the coroutine is automatically cancelled.
 This ability comes in a great deal from the
 [structured concurrency](https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency)
 guarantees from Kotlin's coroutines. If you capture a `CoroutineScope`, you can launch new coroutines tied to
-the lifecycle of that scope. This is exactly what we do in our ViewModel,
+the lifecycle of that scope. This is exactly what we do in
+[our ViewModel](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/presentation/model/WeatherViewModel.kt),
 
 ```kotlin
-context(/* others */, CoroutineScope)
-class WeatherViewModel { /* implementation */ }
+context(/* other contexts */, CoroutineScope)
+class WeatherViewModel {
+    /* ... */
+    
+    fun loadWeatherInfo() {
+        // 'launch' comes from the CoroutineScope
+        launch(Dispatchers.IO) {
+            /* ... */
+        }
+    }
+}
 ```
 
 In our case we want to tie the lifecycle of the ViewModel to that of the entire application. This is done by
@@ -95,5 +110,5 @@ to correctly manage resource acquisition and disposal. This is one of Arrow's DS
 additional features within a certain scope. The other one used heavily within this application are
 [typed errors](https://arrow-kt.io/learn/typed-errors/working-with-typed-errors/).
 
-The implementation of `LocationTracker`, found in `data.location.LocationTrackerImpl`, showcases how the DSLs
-can be used and combined.
+The [implementation of `LocationTracker`](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/data/location/LocationTrackerImpl.kt)
+showcases how the DSLs can be used and combined.
