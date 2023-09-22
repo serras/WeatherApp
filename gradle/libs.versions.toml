@@ -8,6 +8,8 @@ ktor = "2.3.4"
 arrow = "1.2.1"
 arrow-suspendapp = "0.4.0"
 geoip2 = "4.1.0"
+turbine = "1.0.0"
+kotest = "5.7.2"
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -21,6 +23,10 @@ arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref 
 arrow-suspendApp = { module = "io.arrow-kt:suspendapp", version.ref = "arrow-suspendapp" }
 geoip2 = { module = "com.maxmind.geoip2:geoip2", version.ref = "geoip2" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

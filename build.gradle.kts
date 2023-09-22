@@ -42,6 +42,11 @@ dependencies {
     detektPlugins(libs.detekt.formatting)
     detektPlugins("com.wolt.arrow.detekt:rules:latest.release")
     detektPlugins("io.nlopez.compose.rules:detekt:latest.release")
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
@@ -65,4 +70,8 @@ compose.desktop {
 detekt {
     buildUponDefaultConfig = true
     autoCorrect = true
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }

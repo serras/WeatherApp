@@ -99,11 +99,10 @@ class WeatherViewModel {
 }
 ```
 
-In our case we want to tie the lifecycle of the ViewModel to that of the entire application. This is done by
-calling `rememberCoroutineScope` inside the `application` builder, and passing the obtained scope to
-`WeatherViewModel`.
+In our case we want to tie the lifecycle of the ViewModel to that of the entire application. The `CoroutineScope`
+comes from the outermost call to `SuspendApp`.
 
-## Arrow DSLs
+## [Arrow](https://arrow-kt.io/) DSLs
 
 We've already mentioned that [`resourceScope`](https://arrow-kt.io/learn/coroutines/resource-safety/) is used
 to correctly manage resource acquisition and disposal. This is one of Arrow's DSLs, each of them providing
@@ -112,3 +111,36 @@ additional features within a certain scope. The other one used heavily within th
 
 The [implementation of `LocationTracker`](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/data/location/LocationTrackerImpl.kt)
 showcases how the DSLs can be used and combined.
+
+## Tests with [Turbine](https://cashapp.github.io/turbine/docs/1.x/)
+
+One of the advantages of having a `Flow` as source of truth for our application is the availability of specialized
+testing libraries. In particular, [Turbine](https://cashapp.github.io/turbine/docs/1.x/) allows us to specify how
+the flow should evolve over time.
+
+For example, one of our tests simulates that our location tracking is failing by providing a `LocationTracker`
+instance that always returns `null`. In that case, we know that the expected turn of events is _loading_,
+and then _error_.
+
+```kotlin
+"errors when location is down" {
+    // set up WeatherViewModel with a LocationTracker that always fails
+    model.state.test {
+        awaitItem().shouldBeInstanceOf<WeatherState.Loading>()
+        model.loadWeatherInfo()
+        awaitItem().shouldBeInstanceOf<WeatherState.Error>()
+    }
+}
+```
+
+Another tool in our tests is _property-based testing_, brought by [Kotest](https://kotest.io/). Shortly, property-
+based testing executes the same tests several times with arbitrary data, ensuring that more complex conditions and
+corner cases are covered. By using their [reflective generators](https://kotest.io/docs/proptest/reflective-arbs.html),
+starting with a random location and weather data is quite simple.
+
+```kotlin
+checkAll(
+    Arb.bind<Location>(),
+    Arb.list(Arb.bind<WeatherData>(), 24..48)
+) { location, weatherData -> /* test */ }
+```

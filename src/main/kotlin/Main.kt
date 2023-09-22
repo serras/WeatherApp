@@ -1,6 +1,5 @@
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import arrow.continuations.SuspendApp
@@ -12,7 +11,6 @@ import data.weather.WeatherRepositoryImpl
 import domain.location.LocationTracker
 import domain.weather.WeatherRepository
 import presentation.model.WeatherViewModel
-import presentation.scopeAware
 import presentation.ui.WeatherWindow
 import kotlin.time.Duration.Companion.seconds
 
@@ -26,9 +24,10 @@ suspend fun <A> injectDependencies(
 
 suspend fun main() = SuspendApp(timeout = 1.seconds) {
     injectDependencies {
+        // the scope for the model is the entire application
+        val model = WeatherViewModel()
+        // this initializes the application loop
         application {
-            // the scope for the model is the entire application
-            val model = scopeAware { WeatherViewModel() }
             LaunchedEffect("load") { model.loadWeatherInfo() }
             // create the window for our application
             Window(
