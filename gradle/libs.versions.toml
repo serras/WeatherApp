@@ -1,10 +1,10 @@
 [versions]
 kotlin = "1.9.10"
-compose = "1.5.2"
+compose = "1.5.3"
 detekt = "1.23.1"
 kotlinx-datetime = "0.4.1"
 kotlinx-serialization = "1.6.0"
-ktor = "2.3.4"
+ktor = "2.3.5"
 arrow = "1.2.1"
 arrow-suspendapp = "0.4.0"
 geoip2 = "4.1.0"
