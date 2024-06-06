@@ -9,7 +9,7 @@ arrow = "1.2.1"
 arrow-suspendapp = "0.4.0"
 geoip2 = "4.1.0"
 turbine = "1.0.0"
-kotest = "5.7.2"
+kotest = "5.9.1"
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
