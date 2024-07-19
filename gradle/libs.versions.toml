@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.10"
+kotlin = "1.9.25"
 compose = "1.5.3"
 detekt = "1.23.1"
 kotlinx-datetime = "0.4.1"
