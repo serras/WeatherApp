@@ -1,10 +1,11 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose.plugin)
     alias(libs.plugins.detekt)
     idea
 }
@@ -39,6 +40,8 @@ dependencies {
 
     implementation(libs.geoip2)
 
+    implementation(libs.slf4j.simple)
+
     detektPlugins(libs.detekt.formatting)
     detektPlugins("com.wolt.arrow.detekt:rules:latest.release")
     detektPlugins("io.nlopez.compose.rules:detekt:latest.release")
@@ -49,9 +52,9 @@ dependencies {
     testImplementation(libs.kotest.runner)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-Xcontext-receivers"
+tasks.withType<KotlinCompilationTask<*>>().configureEach {
+    compilerOptions{
+        freeCompilerArgs.add("-Xcontext-receivers")
     }
 }
 
