@@ -8,7 +8,7 @@ ktor = "2.3.12"
 arrow = "1.2.4"
 arrow-suspendapp = "0.4.0"
 geoip2 = "4.2.0"
-turbine = "1.1.0"
+turbine = "1.2.0"
 kotest = "5.9.1"
 slf4j = "2.0.16"
 
