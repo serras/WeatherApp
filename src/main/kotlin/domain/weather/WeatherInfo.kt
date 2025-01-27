@@ -44,6 +44,5 @@ interface WeatherRepository {
         }
     }
 
-    context(Raise<Error>)
-    suspend fun getWeatherData(lat: Double, long: Double): WeatherInfo
+    suspend fun Raise<Error>.getWeatherData(lat: Double, long: Double): WeatherInfo
 }

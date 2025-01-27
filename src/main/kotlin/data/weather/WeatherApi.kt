@@ -40,8 +40,7 @@ class WeatherApi : AutoCloseable {
         openMeteo.close()
     }
 
-    context(Raise<WeatherRepository.Error>)
-    suspend fun getWeatherData(
+    suspend fun Raise<WeatherRepository.Error>.getWeatherData(
         latitude: Double,
         longitude: Double
     ): WeatherDto {

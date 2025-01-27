@@ -14,18 +14,12 @@ import presentation.model.WeatherViewModel
 import presentation.ui.WeatherWindow
 import kotlin.time.Duration.Companion.seconds
 
-suspend fun <A> injectDependencies(
-    block: context(WeatherRepository, LocationTracker) () -> A
-): A = resourceScope {
-    val weather: WeatherRepository = WeatherRepositoryImpl(autoCloseable { WeatherApi() })
-    val location: LocationTracker = autoCloseable { LocationTrackerImpl() }
-    block(weather, location)
-}
-
 suspend fun main() = SuspendApp(timeout = 1.seconds) {
-    injectDependencies {
+    resourceScope {
+        val weather: WeatherRepository = WeatherRepositoryImpl(autoCloseable { WeatherApi() })
+        val location: LocationTracker = autoCloseable { LocationTrackerImpl() }
         // the scope for the model is the entire application
-        val model = WeatherViewModel()
+        val model = WeatherViewModel(weather, location)
         // this initializes the application loop
         application {
             LaunchedEffect("load") { model.loadWeatherInfo() }

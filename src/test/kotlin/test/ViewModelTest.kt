@@ -12,21 +12,18 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.bind
 import io.kotest.property.arbitrary.list
 import io.kotest.property.checkAll
-import kotlinx.coroutines.CoroutineScope
 import presentation.model.WeatherState
 import presentation.model.WeatherViewModel
 
 class ViewModelTest : StringSpec({
-    suspend fun CoroutineScope.fake(
+    suspend fun fake(
         location: Location?,
         weatherData: List<WeatherData>,
         block: suspend (WeatherViewModel) -> Unit
     ) {
-        with(FakeLocationTracker(location)) {
-            with(FakeWeatherRepository(weatherData.toNonEmptyListOrNull()!!)) {
-                block(WeatherViewModel())
-            }
-        }
+        val locationTracker = FakeLocationTracker(location)
+        val weather = FakeWeatherRepository(weatherData.toNonEmptyListOrNull()!!)
+        block(WeatherViewModel(weather, locationTracker))
     }
 
     "loading works fine" {

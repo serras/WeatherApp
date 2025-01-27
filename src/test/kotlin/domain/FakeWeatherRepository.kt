@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.minutes
 data class FakeWeatherRepository(
     val data: NonEmptyList<WeatherData>
 ) : WeatherRepository {
-    context(Raise<WeatherRepository.Error>) override suspend fun getWeatherData(
+    override suspend fun Raise<WeatherRepository.Error>.getWeatherData(
         lat: Double,
         long: Double,
     ): WeatherInfo {
