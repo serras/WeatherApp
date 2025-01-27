@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.1.10"
-compose = "1.7.3"
+compose = "1.8.0+check"
 detekt = "1.23.7"
 kotlinx-datetime = "0.6.1"
 kotlinx-serialization = "1.8.0"
