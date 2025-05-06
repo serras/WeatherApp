@@ -9,11 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.weather.WeatherData
-import presentation.r
+import org.jetbrains.compose.resources.painterResource
 import presentation.timeAsString
 
 @Suppress("FunctionNaming")
@@ -32,7 +31,7 @@ fun HourlyWeatherDisplay(
         color = Color.LightGray
     )
     Image(
-        painter = painterResource(r(data.weatherType.icon.iconName)),
+        painter = painterResource(data.weatherType.icon.resource),
         contentDescription = data.weatherType.weatherDesc,
         modifier = Modifier.width(40.dp)
     )

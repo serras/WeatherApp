@@ -16,14 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.vectorResource
 import presentation.model.WeatherState
-import presentation.r
 import presentation.timeAsString
-import presentation.vectorResource
 import kotlin.math.roundToInt
 
 @Suppress("FunctionNaming", "LongMethod")
@@ -50,7 +49,7 @@ fun WeatherCard(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Image(
-                painter = painterResource(r(data.weatherType.icon.iconName)),
+                painter = painterResource(data.weatherType.icon.resource),
                 contentDescription = data.weatherType.weatherDesc,
                 modifier = Modifier.width(200.dp)
             )
@@ -76,7 +75,7 @@ fun WeatherCard(
                     WeatherDataDisplay(
                         value = it.value.roundToInt(),
                         unit = it.unit,
-                        icon = vectorResource(r(it.icon)),
+                        icon = vectorResource(it.icon),
                         tint = Color.White,
                         textStyle = TextStyle(color = Color.White)
                     )

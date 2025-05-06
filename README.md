@@ -44,15 +44,16 @@ sealed interface WeatherState {
 }
 ```
 
-## Context receivers
+## Context parameters
 
 Our implementation doesn't use dependency injection framework, as opposed to most Android applications, which use
-[Hilt](https://developer.android.com/training/dependency-injection/hilt-android). Instead, the dependencies are
-represented as [context receivers](https://github.com/Kotlin/KEEP/blob/master/proposals/context-receivers.md),
+[Hilt](https://developer.android.com/training/dependency-injection/hilt-android). Instead, the dependencies are injected using
+[context parameters](https://github.com/Kotlin/KEEP/blob/context-parameters/proposals/context-parameters.md),
 
 ```kotlin
-context(WeatherRepository, LocationTracker)
-class WeatherViewModel { /* implementation */ }
+// actually implemented as 'invoke' on the companion object
+context(weather: WeatherRepository, location: LocationTracker)
+fun WeatherViewModel() { /* implementation */ }
 ```
 
 The actual injection of dependencies is performed manually in the [entry point](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/Main.kt),
@@ -61,7 +62,7 @@ The actual injection of dependencies is performed manually in the [entry point](
 suspend fun <A> injectDependencies(
     block: context(WeatherRepository, LocationTracker) () -> A
 ): A = resourceScope {
-    val weather: WeatherRepository = WeatherRepositoryImpl(autoCloseable { WeatherApi() })
+    val weather: WeatherRepository = autoCloseable { WeatherRepositoryImpl() }
     val location: LocationTracker = autoCloseable { LocationTrackerImpl() }
     block(weather, location)
 }
@@ -78,29 +79,25 @@ Jetpack Compose encourages to keep the activity state in a
 [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel). One of the main benefits of
 this approach is that ViewModels are lifecycle-aware. For example, if you launch a concurrent coroutine and the
 activity is then closed, the coroutine is automatically cancelled.
-
 This ability comes in a great deal from the
 [structured concurrency](https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency)
-guarantees from Kotlin's coroutines. If you capture a `CoroutineScope`, you can launch new coroutines tied to
-the lifecycle of that scope. This is exactly what we do in
+guarantees from Kotlin's coroutines. 
+
+We use the fact that Compose already brings one such `CoroutineScope` in
 [our ViewModel](https://github.com/serras/WeatherApp/blob/main/src/main/kotlin/presentation/model/WeatherViewModel.kt),
 
 ```kotlin
-context(/* other contexts */, CoroutineScope)
 class WeatherViewModel {
     /* ... */
     
     fun loadWeatherInfo() {
-        // 'launch' comes from the CoroutineScope
-        launch(Dispatchers.IO) {
+        // 'launch' comes from the 'viewModelScope' CoroutineScope
+        viewModelScope.launch(Dispatchers.IO) {
             /* ... */
         }
     }
 }
 ```
-
-In our case we want to tie the lifecycle of the ViewModel to that of the entire application. The `CoroutineScope`
-comes from the outermost call to `SuspendApp`.
 
 ## [Arrow](https://arrow-kt.io/) DSLs
 

@@ -1,7 +1,11 @@
+@file:Suppress("WildcardImport", "NoWildcardImports")
+
 package domain.weather
 
 import arrow.core.raise.Raise
+import com.serranofp.weatherapp.generated.resources.*
 import kotlinx.datetime.LocalDateTime
+import org.jetbrains.compose.resources.DrawableResource
 
 data class WeatherInfo(
     val weatherDataPerDay: Map<Int, List<WeatherData>>,
@@ -19,17 +23,17 @@ data class WeatherData(
     data class Element(
         val value: Double,
         val unit: String,
-        val icon: String
+        val icon: DrawableResource
     )
     val elements: List<Element> = listOf(
-        Element(temperatureCelsius, "C", "sunny"),
-        Element(pressure, "hPa", "pressure"),
-        Element(humidity, "%", "drop"),
-        Element(windSpeed, "km/h", "wind"),
+        Element(temperatureCelsius, "C", Res.drawable.ic_sunny),
+        Element(pressure, "hPa", Res.drawable.ic_pressure),
+        Element(humidity, "%", Res.drawable.ic_drop),
+        Element(windSpeed, "km/h", Res.drawable.ic_wind),
     )
 }
 
-interface WeatherRepository {
+interface WeatherRepository : AutoCloseable {
     sealed interface Error {
         val message: String
 

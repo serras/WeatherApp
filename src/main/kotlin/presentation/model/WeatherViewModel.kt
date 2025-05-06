@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(
+class WeatherViewModel private constructor(
     private val weather: WeatherRepository,
     private val locationTracker: LocationTracker
 ) : ViewModel() {
@@ -34,5 +34,10 @@ class WeatherViewModel(
             ifLeft = { WeatherState.Error(it) },
             ifRight = { it }
         )
+    }
+
+    companion object {
+        context(weather: WeatherRepository, locationTracker: LocationTracker)
+        operator fun invoke(): WeatherViewModel = WeatherViewModel(weather, locationTracker)
     }
 }

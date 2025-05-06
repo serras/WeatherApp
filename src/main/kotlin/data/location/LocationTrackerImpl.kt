@@ -14,7 +14,7 @@ import io.ktor.http.isSuccess
 import java.io.InputStream
 import java.net.InetAddress
 
-class LocationTrackerImpl : LocationTracker, AutoCloseable {
+class LocationTrackerImpl : LocationTracker {
     private val dbResource: InputStream = ClassLoader.getSystemResourceAsStream("geoip/GeoLite2-City.mmdb")!!
     private val db: DatabaseReader = DatabaseReader.Builder(dbResource).build()
 

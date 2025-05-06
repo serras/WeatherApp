@@ -21,9 +21,11 @@ class ViewModelTest : StringSpec({
         weatherData: List<WeatherData>,
         block: suspend (WeatherViewModel) -> Unit
     ) {
-        val locationTracker = FakeLocationTracker(location)
-        val weather = FakeWeatherRepository(weatherData.toNonEmptyListOrNull()!!)
-        block(WeatherViewModel(weather, locationTracker))
+        with (FakeLocationTracker(location)) {
+            with (FakeWeatherRepository(weatherData.toNonEmptyListOrNull()!!)) {
+                block(WeatherViewModel())
+            }
+        }
     }
 
     "loading works fine" {

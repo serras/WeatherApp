@@ -7,4 +7,7 @@ data class FakeLocationTracker(
     val location: Location?
 ) : LocationTracker {
     override suspend fun getCurrentLocation(): Location? = location
+    
+    @Suppress("EmptyFunctionBlock")
+    override fun close() { }
 }

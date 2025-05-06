@@ -13,7 +13,7 @@ import kotlin.time.Duration.Companion.minutes
 
 data class FakeWeatherRepository(
     val data: NonEmptyList<WeatherData>
-) : WeatherRepository {
+) : WeatherRepository, AutoCloseable {
     override suspend fun Raise<WeatherRepository.Error>.getWeatherData(
         lat: Double,
         long: Double,
@@ -27,4 +27,7 @@ data class FakeWeatherRepository(
         val weatherMap = updatedData.chunked(24).withIndex().associate { it.index to it.value }
         return WeatherInfo(weatherMap, current)
     }
+
+    @Suppress("EmptyFunctionBlock")
+    override fun close() { }
 }

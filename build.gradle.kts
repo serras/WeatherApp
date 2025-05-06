@@ -1,5 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -25,6 +24,7 @@ dependencies {
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
+    implementation(compose.components.resources)
     implementation(libs.lifecycle.viewmodel.compose)
 
     implementation(libs.kotlinx.datetime)
@@ -43,7 +43,7 @@ dependencies {
 
     implementation(libs.slf4j.simple)
 
-    detektPlugins(libs.detekt.formatting)
+    // detektPlugins(libs.detekt.formatting)
     detektPlugins("com.wolt.arrow.detekt:rules:latest.release")
     detektPlugins("io.nlopez.compose.rules:detekt:latest.release")
 
@@ -72,4 +72,8 @@ detekt {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+kotlin {
+    compilerOptions.freeCompilerArgs.add("-Xcontext-parameters")
 }

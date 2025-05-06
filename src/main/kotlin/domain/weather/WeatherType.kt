@@ -1,18 +1,21 @@
+@file:Suppress("WildcardImport", "NoWildcardImports")
+
 package domain.weather
 
-enum class WeatherIcon {
-    SUNNY,
-    CLOUDY,
-    VERY_CLOUDY,
-    RAINSHOWER,
-    SNOWYRAINY,
-    RAINY,
-    SNOWY,
-    HEAVYSNOW,
-    THUNDER,
-    RAINYTHUNDER;
+import com.serranofp.weatherapp.generated.resources.*
+import org.jetbrains.compose.resources.DrawableResource
 
-    val iconName: String = name.lowercase()
+enum class WeatherIcon(val resource: DrawableResource) {
+    SUNNY(Res.drawable.ic_sunny),
+    CLOUDY(Res.drawable.ic_cloudy),
+    VERY_CLOUDY(Res.drawable.ic_very_cloudy),
+    RAINSHOWER(Res.drawable.ic_rainshower),
+    SNOWYRAINY(Res.drawable.ic_snowyrainy),
+    RAINY(Res.drawable.ic_rainy),
+    SNOWY(Res.drawable.ic_snowy),
+    HEAVYSNOW(Res.drawable.ic_heavysnow),
+    THUNDER(Res.drawable.ic_thunder),
+    RAINYTHUNDER(Res.drawable.ic_rainythunder)
 }
 
 enum class WeatherType(
