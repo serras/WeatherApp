@@ -47,10 +47,15 @@ dependencies {
     detektPlugins("com.wolt.arrow.detekt:rules:latest.release")
     detektPlugins("io.nlopez.compose.rules:detekt:latest.release")
 
+    testImplementation(kotlin("test"))
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.kotest.assertions)
     testImplementation(libs.kotest.property)
-    testImplementation(libs.kotest.runner)
+}
+
+kotlin {
+    compilerOptions.freeCompilerArgs.add("-Xcontext-parameters")
 }
 
 compose.desktop {
@@ -72,8 +77,4 @@ detekt {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-}
-
-kotlin {
-    compilerOptions.freeCompilerArgs.add("-Xcontext-parameters")
 }
