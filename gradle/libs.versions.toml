@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.1.21"
-compose = "1.8.1"
+compose = "1.8.2"
 detekt = "1.23.8"
 kotlinx-coroutines = "1.10.2"
 kotlinx-datetime = "0.6.2"
