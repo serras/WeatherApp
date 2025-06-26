@@ -4,14 +4,16 @@ import arrow.core.zip
 import domain.weather.WeatherData
 import domain.weather.WeatherInfo
 import domain.weather.WeatherType
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 const val MINUTES_IN_HALF_HOUR: Int = 30
 const val HOURS_IN_A_DAY: Int = 24
 
+@OptIn(ExperimentalTime::class)
 fun WeatherDto.toWeatherInfo(): WeatherInfo {
     val map = weatherData.toWeatherDataMap()
     val now = Clock.System.now().toLocalDateTime(TimeZone.UTC)

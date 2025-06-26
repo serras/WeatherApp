@@ -4,7 +4,9 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 val LocalDateTime.local: LocalDateTime
     get() = toInstant(TimeZone.UTC).toLocalDateTime(TimeZone.currentSystemDefault())
 

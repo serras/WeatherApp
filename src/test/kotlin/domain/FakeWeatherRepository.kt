@@ -10,7 +10,9 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 data class FakeWeatherRepository(
     val data: NonEmptyList<WeatherData>
 ) : WeatherRepository, AutoCloseable {
