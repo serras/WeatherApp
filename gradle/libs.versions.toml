@@ -11,7 +11,7 @@ geoip2 = "4.4.0"
 turbine = "1.2.1"
 kotest = "6.0.4"
 slf4j = "2.0.17"
-lifecycle-viewmodel-compose = "2.9.5"
+lifecycle-viewmodel-compose = "2.9.6"
 
 [libraries]
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
