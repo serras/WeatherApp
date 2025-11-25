@@ -27,7 +27,7 @@ class LocationTrackerImpl : LocationTracker {
     override suspend fun getCurrentLocation(): Location? = nullable {
         val ip = getCurrentIp().bind()
         val city = db.city(ip).bind()
-        Location(city.city.name, city.location.latitude, city.location.longitude)
+        Location(city.city().name(), city.location().latitude(), city.location().longitude())
     }
 
     // https://www.baeldung.com/java-get-ip-address#find-the-public-ip-address
