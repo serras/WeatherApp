@@ -9,7 +9,7 @@ ktor = "3.3.3"
 arrow = "2.2.0"
 geoip2 = "5.0.1"
 turbine = "1.2.1"
-kotest = "6.0.7"
+kotest = "6.1.11"
 slf4j = "2.0.17"
 lifecycle-viewmodel-compose = "2.9.6"
 
