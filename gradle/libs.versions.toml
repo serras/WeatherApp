@@ -1,17 +1,17 @@
 [versions]
-kotlin = "2.2.21"
-compose = "1.9.3"
+kotlin = "2.3.21"
+compose = "1.11.0"
 detekt = "1.23.8"
 kotlinx-coroutines = "1.10.2"
-kotlinx-datetime = "0.7.1"
-kotlinx-serialization = "1.9.0"
-ktor = "3.3.3"
-arrow = "2.2.0"
-geoip2 = "5.0.1"
+kotlinx-datetime = "0.8.0"
+kotlinx-serialization = "1.11.0"
+ktor = "3.5.0"
+arrow = "2.2.2.1"
+geoip2 = "5.1.0"
 turbine = "1.2.1"
-kotest = "6.0.7"
+kotest = "6.1.11"
 slf4j = "2.0.17"
-lifecycle-viewmodel-compose = "2.9.6"
+lifecycle-viewmodel-compose = "2.10.0"
 
 [libraries]
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
@@ -31,6 +31,7 @@ kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref =
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
+components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
