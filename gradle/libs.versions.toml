@@ -10,7 +10,7 @@ arrow = "2.2.2.1"
 geoip2 = "5.1.0"
 turbine = "1.2.1"
 kotest = "6.1.11"
-slf4j = "2.0.17"
+slf4j = "2.0.19"
 lifecycle-viewmodel-compose = "2.10.0"
 
 [libraries]
